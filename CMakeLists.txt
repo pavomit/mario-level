@@ -27,3 +27,34 @@ FetchContent_MakeAvailable(${SFML_LIB_NAME})
 add_executable(${TARGET_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 )
+
+target_link_libraries(${TARGET_NAME} PUBLIC sfml-window)
+target_link_libraries(${TARGET_NAME} PUBLIC sfml-system) 
+target_link_libraries(${TARGET_NAME} PUBLIC sfml-graphics)
+
+add_custom_command(
+    TARGET ${TARGET_NAME}
+    POST_BUILD
+    COMMAND
+    ${CMAKE_COMMAND} -E copy_if_different
+    $<TARGET_FILE:sfml-window>
+    $<TARGET_FILE_DIR:${TARGET_NAME}>
+)
+
+add_custom_command(
+    TARGET ${TARGET_NAME}
+    POST_BUILD
+    COMMAND
+    ${CMAKE_COMMAND} -E copy_if_different
+    $<TARGET_FILE:sfml-graphics>
+    $<TARGET_FILE_DIR:${TARGET_NAME}>
+)
+
+add_custom_command(
+    TARGET ${TARGET_NAME}
+    POST_BUILD
+    COMMAND
+    ${CMAKE_COMMAND} -E copy_if_different
+    $<TARGET_FILE:sfml-system>
+    $<TARGET_FILE_DIR:${TARGET_NAME}>
+)
