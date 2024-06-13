@@ -11,6 +11,18 @@ set(CMAKE_CXX_FEATURES         OFF)
 
 set(TARGET_NAME mario-level)
 
+include(FetchContent)
+
+set(SFML_LIB_NAME SFML)
+
+FetchContent_Declare(
+    ${SFML_LIB_NAME}
+    GIT_REPOSITORY https://github.com/SFML/SFML
+    GIT_TAG 2.6.1
+    GIT_SHALLOW FALSE 
+)
+
+FetchContent_MakeAvailable(${SFML_LIB_NAME})
 
 add_executable(${TARGET_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
