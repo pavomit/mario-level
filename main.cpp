@@ -49,6 +49,11 @@ int main()
     //++++++++++++++ gravity related varibles ++++++++++++++++++++++++++++++++
     float xForce{}, yForce{};
 
+    //++++++++++++++ camera +++++++++++++++++++++++++++++++++++
+    sf::View camera;
+    camera.setSize(1200, 700);
+    camera.setCenter(600, 350);
+
     while (window.isOpen())
     {
         timer += 0.1;
@@ -81,7 +86,7 @@ int main()
                 timer = 0;
             }
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && marioSprite.getPosition().x > 100) {
             xForce = -3;
             marioSprite.setScale(-0.5, 0.5);
             if (timer > 1) {
@@ -99,6 +104,12 @@ int main()
         if (animation_state > 182) {
             animation_state = 0;
         }
+
+        //static background inside camera
+        backgroundSprite.setPosition(marioSprite.getPosition().x - 100, 0);
+
+        camera.setCenter(marioSprite.getPosition().x + 500, 350);
+        window.setView(camera);
 
         window.clear();
         window.draw(backgroundSprite);
