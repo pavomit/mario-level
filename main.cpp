@@ -25,6 +25,26 @@ int main()
     sf::Sprite backgroundSprite(backgroundTexture);
     backgroundSprite.setScale(2.1, 2.5);
 
+    //++++++++++++++++++++++ house ++++++++++++++++++++++++
+    sf::Texture houseTexture;
+    if (!houseTexture.loadFromFile("../assets/images/house.png")) {
+        std::cerr << "Error loading background texture @assets/images\n";
+    }
+    sf::Sprite houseSprite(houseTexture);
+    houseSprite.setScale(1.3, 1.3);
+    houseSprite.setPosition(5000, 310);
+
+    //++++++++++++++++++++++ enemy ++++++++++++++++++++++++
+    sf::Texture enemyTexture;
+    if (!enemyTexture.loadFromFile("../assets/images/m.png")) {
+        std::cerr << "Error loading background texture @assets/images\n";
+    }
+    sf::Sprite enemySprite(enemyTexture);
+    enemySprite.setScale(0.3, 0.3);
+    enemySprite.setPosition(400, 570);
+
+    bool emenyDirection = true; // true - > right | false <- left
+
     //+++++++++++++++++++++++ blocks ++++++++++++++++++++++++++
     const int numberOfBlocks{ 100 };
 
@@ -42,6 +62,10 @@ int main()
 
     // no blocks(holes)
     blockSprites[7].setScale(0, 0);
+    blockSprites[12].setScale(0, 0);
+    blockSprites[21].setScale(0, 0);
+    blockSprites[25].setScale(0, 0);
+    blockSprites[33].setScale(0, 0);
 
     //++++++++++++++ animation realted variables ++++++++++++++++++++++++++++++++
     int animation_state{ 0 };
@@ -63,6 +87,23 @@ int main()
         if (yForce <= 5) {
             yForce += 0.1;
         }
+        
+        //enemy movement
+
+        if (enemySprite.getPosition().x <= 600) {
+            emenyDirection = true;
+        }
+        else if (enemySprite.getPosition().x >= 1000) {
+            emenyDirection = false;
+        }
+
+        if (emenyDirection) {
+            enemySprite.move(2, 0);
+        }
+        else {
+            enemySprite.move(-2, 0);
+        }
+
         //collision with blocks after jump
         for (int i = 0; i < numberOfBlocks; i++)
         {
@@ -113,6 +154,8 @@ int main()
 
         window.clear();
         window.draw(backgroundSprite);
+        window.draw(houseSprite);
+        window.draw(enemySprite);
         for (int i = 0; i < numberOfBlocks; i++) {
             window.draw(blockSprites[i]);
         }
