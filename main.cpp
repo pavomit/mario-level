@@ -78,6 +78,27 @@ int main()
     camera.setSize(1200, 700);
     camera.setCenter(600, 350);
 
+    //+++++++++++++ font and text +++++++++++++++++++++++++
+    sf::Font font;
+    if (!font.loadFromFile("../assets/fonts/font.ttf")) {
+        std::cerr << "Error loading font @/assets\n";
+    }
+    sf::Text mainMenu;
+    mainMenu.setFont(font);
+    mainMenu.setFillColor(sf::Color::White);
+    mainMenu.setCharacterSize(40);
+    mainMenu.setString("Super Mario - A concept Level");
+    float mainMenuWidth = mainMenu.getGlobalBounds().width;
+    mainMenu.setPosition(600 - mainMenuWidth / 2, 200);
+
+    sf::Text startHint;
+    startHint.setFont(font);
+    startHint.setFillColor(sf::Color::White);
+    startHint.setCharacterSize(35);
+    startHint.setString("Press Enter to Start....");
+
+    float startHintWidth = startHint.getGlobalBounds().width;
+    startHint.setPosition(600 - startHintWidth / 2, 400);
     //++++++++++++++ game phases +++++++++++++++++++++++++
     /*
     * 1- Mian Menu
@@ -85,10 +106,25 @@ int main()
     * 3- Win
     * 4- Lose 
     */
-    int phase = 2;
+    int phase = 1;
 
     while (window.isOpen())
     {
+        //main menu
+        if (phase == 1) {
+            sf::Event event;
+            while (window.pollEvent(event)) {
+                if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                    window.close();
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+                    phase = 2;
+            }
+
+            window.clear(sf::Color::Black);
+            window.draw(mainMenu);
+            window.draw(startHint);
+            window.display();
+        }
         // play
         if (phase == 2) {
             // pahse:2 - start
@@ -187,11 +223,21 @@ int main()
         }
         // win
         if (phase == 3) {
+            sf::Event event;
+            while (window.pollEvent(event)) {
+                if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                    window.close();
+            }
             window.clear(sf::Color::Green);
             window.display();
         }
         // lose
         if (phase == 4) {
+            sf::Event event;
+            while (window.pollEvent(event)) {
+                if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                    window.close();
+            }
             window.clear(sf::Color::Red);
             window.display();
         }
