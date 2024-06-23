@@ -61,11 +61,20 @@ int main()
     }
 
     // no blocks(holes)
-    blockSprites[7].setScale(0, 0);
-    blockSprites[12].setScale(0, 0);
-    blockSprites[21].setScale(0, 0);
-    blockSprites[25].setScale(0, 0);
-    blockSprites[33].setScale(0, 0);
+    //random holes each game 
+    std::srand(std::time(0));
+    blockSprites[std::rand() %  (numberOfBlocks - 3) + 3].setScale(0, 0);
+    blockSprites[std::rand() %  (numberOfBlocks - 3) + 3].setScale(0, 0);
+    blockSprites[std::rand() %  (numberOfBlocks - 3) + 3].setScale(0, 0);
+    blockSprites[std::rand() %  (numberOfBlocks - 3) + 3].setScale(0, 0);
+    blockSprites[std::rand() %  (numberOfBlocks - 3) + 3].setScale(0, 0);
+    blockSprites[std::rand() %  (numberOfBlocks - 3) + 3].setScale(0, 0);
+    blockSprites[std::rand() %  (numberOfBlocks - 3) + 3].setScale(0, 0);
+    blockSprites[std::rand() %  (numberOfBlocks - 3) + 3].setScale(0, 0);
+    blockSprites[std::rand() %  (numberOfBlocks - 3) + 3].setScale(0, 0);
+    blockSprites[std::rand() %  (numberOfBlocks - 3) + 3].setScale(0, 0);
+    blockSprites[std::rand() %  (numberOfBlocks - 3) + 3].setScale(0, 0);
+    blockSprites[std::rand() %  (numberOfBlocks - 3) + 3].setScale(0, 0);
 
     //++++++++++++++ animation realted variables ++++++++++++++++++++++++++++++++
     int animation_state{ 0 };
@@ -202,6 +211,11 @@ int main()
 
             if (animation_state > 182) {
                 animation_state = 0;
+            }
+
+            // go to loose state if fallen from a block
+            if (marioSprite.getPosition().y >= 620) {
+                phase = 4;
             }
 
             //static background inside camera
